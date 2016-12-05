@@ -22,3 +22,6 @@ select,
 textarea {
     max-width: 280px;
 }
+.padRight8px {
+    padding-right:8px;
+}

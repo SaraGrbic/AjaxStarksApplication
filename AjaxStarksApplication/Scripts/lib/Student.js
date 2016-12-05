@@ -8,7 +8,7 @@ var isUpdateable= false;
 //Get students list,by default this function will be run first for the page load
 function getStudents() {
     $.ajax({
-        url: '/Students/GetStudents',
+        url: '/Students/GetStudents/',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -139,7 +139,9 @@ $("#btnCreate").click(function () {
 
 //Close modal
 $("#btnClose").click(function () {
+    $("#studentModal").modal('hide');
     clear();
+
     
 });
 //Clear all items
@@ -153,6 +155,9 @@ function clear() {
     $("#DateOfBirth").val("");
     $("#Gender").val("");
 }
+$(function () {
+    $("#DateOfBirth").datepicker();
+});
 
 
 
