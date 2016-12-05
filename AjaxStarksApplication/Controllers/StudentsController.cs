@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AjaxStarksApplication;
 
 namespace AjaxStarksApplication.Controllers
 {
@@ -19,19 +13,20 @@ namespace AjaxStarksApplication.Controllers
         {
             return View();
         }
+
         //GET: Students list
        public ActionResult GetStudents()
         {
             var students = db.Students.ToList();
             return Json(students, JsonRequestBehavior.AllowGet);
         } 
+
         //GET: student by id
         public ActionResult Get(int id)
         {
             var student = db.Students.ToList().Find(x => x.Id == id);
             return Json(student, JsonRequestBehavior.AllowGet);
         }
-      
 
         // POST: Students/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -43,7 +38,6 @@ namespace AjaxStarksApplication.Controllers
             {
                 db.Students.Add(student);
                 db.SaveChanges();
-             
             }
 
             return Json(student, JsonRequestBehavior.AllowGet);
@@ -59,7 +53,6 @@ namespace AjaxStarksApplication.Controllers
             }
             return Json(student, JsonRequestBehavior.AllowGet);
         }
-
  
         // Delete student by id
         [HttpPost]
@@ -74,16 +67,5 @@ namespace AjaxStarksApplication.Controllers
             }
             return Json(student, JsonRequestBehavior.AllowGet);
         }
-
-     
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
     }
 }
