@@ -220,6 +220,8 @@
     <Compile Include="App_Data\StarksBase.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="ViewModels\EnrollmentViewModel.cs" />
+    <Compile Include="ViewModels\StudentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

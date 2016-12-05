@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using AjaxStarksApplication.ViewModels;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -18,7 +19,19 @@ namespace AjaxStarksApplication.Controllers
        public ActionResult GetStudents()
         {
             var students = db.Students.ToList();
-            return Json(students, JsonRequestBehavior.AllowGet);
+            var studentViewModels = students.Select(student =>
+                new StudentViewModel()
+                {
+                    Id = student.Id,
+                    Address = student.Address,
+                    City = student.City,
+                    FirstName = student.FirstName,
+                    Gender = student.Gender,
+                    LastName = student.LastName,
+                    State = student.State,
+                    DateOfBirth = student.DateOfBirth.ToString("dd.MM.yyyy")
+                });
+            return Json(studentViewModels, JsonRequestBehavior.AllowGet);
         } 
 
         //GET: student by id
