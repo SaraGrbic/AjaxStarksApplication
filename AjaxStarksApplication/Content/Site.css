@@ -25,3 +25,7 @@ textarea {
 .padRight8px {
     padding-right:8px;
 }
+
+.table > tbody > tr > td {
+    vertical-align : middle;
+}
