@@ -13,9 +13,5 @@ Build
 *.user
 *.orig
 *.lib
-EnergyStartup/.vs/config/applicationhost.config
-frontend/frontoffice/node_modules
-frontend/frontoffice/npm-debug.log
-frontend/frontoffice/bower_components
-frontend/frontoffice/npm_install_text.txt
+
 
