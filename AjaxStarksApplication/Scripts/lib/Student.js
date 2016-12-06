@@ -37,6 +37,7 @@ function getStudents() {
 //Get student by id
 function getStudentById(id) {
     $("#title").text("Student Detail");
+  
     $.ajax({
         url: '/Students/Get/' + id,
         type: 'GET',
@@ -52,6 +53,7 @@ function getStudentById(id) {
             $("#Gender").val(data.Gender);
             isUpdateable = true;
             $("#studentModal").modal('show');
+           
 
         },
         error: function (err) {
@@ -135,6 +137,9 @@ function deleteStudentById(id) {
 //Set title for create new
 $("#btnCreate").click(function () {
     $("#title").text("Create New");
+    $(function () {
+        $("#DateOfBirth").datepicker({ dateFormat: 'dd.MM.yyyy' });
+    });
 })
 
 //Close modal
@@ -144,6 +149,11 @@ $("#btnClose").click(function () {
 
     
 });
+$("#btnEdit").click(function() {
+    $(function () {
+        $("#DateOfBirth").datepicker({ dateFormat: 'dd.MM.yyyy' });
+    });
+})
 //Clear all items
 function clear() {
     $("#Id").val("");
@@ -158,7 +168,6 @@ function clear() {
 $(function () {
     $("#DateOfBirth").datepicker();
 });
-
 
 
 
