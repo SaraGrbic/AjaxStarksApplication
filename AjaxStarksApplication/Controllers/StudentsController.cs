@@ -37,8 +37,21 @@ namespace AjaxStarksApplication.Controllers
         //GET: student by id
         public ActionResult Get(int id)
         {
-            var student = db.Students.ToList().Find(x => x.Id == id);
-            return Json(student, JsonRequestBehavior.AllowGet);
+            var student = db.Students.FirstOrDefault(x => x.Id == id);
+
+            var studentViewModel = new StudentViewModel
+            {
+                Id = student.Id,
+                Address = student.Address,
+                City = student.City,
+                FirstName = student.FirstName,
+                Gender = student.Gender,
+                LastName = student.LastName,
+                State = student.State,
+                DateOfBirth = student.DateOfBirth.ToString("dd.MM.yyyy")
+            };
+
+            return Json(studentViewModel, JsonRequestBehavior.AllowGet);
         }
 
         // POST: Students/Create
