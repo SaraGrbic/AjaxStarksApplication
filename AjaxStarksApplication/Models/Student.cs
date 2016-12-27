@@ -15,7 +15,6 @@ namespace AjaxStarksApplication
             Enrollments = new HashSet<Enrollment>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [Required]

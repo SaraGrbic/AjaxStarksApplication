@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
+    addEvents();
     getStudents();
+    $("#DateOfBirth").datepicker();
 });
 //Declare a variable to check when the action is Insert or Update
 
@@ -62,62 +64,61 @@ function getStudentById(id) {
 
     });
 }
-//Insert/Update a student
-$("#btnSave").click(function (e) {
-    var data = {
-        Id: $("#Id").val(),
-        FirstName: $("#FirstName").val(),
-        LastName: $("#LastName").val(),
-        Address: $("#Address").val(),
-        City: $("#City").val(),
-        State: $("#State").val(),
-        DateOfBirth: $("#DateOfBirth").val(),
-        Gender: $("#Gender").val()
-    }
-    if (!isUpdateable) {
-        $.ajax({
-            url: '/Students/Create/',
-            type: 'POST',
-            dataType: 'json',
-            data: data,
-            success: function (data) {
-                getStudents();
-                $("#studentModal").modal('hide');
-                clear();
-            },
-            error: function (err) {
-                alert("Error: " + err.responseText);
-            }
 
-        })
+function addEvents() {
+    //Insert/Update a student
+    $("#btnSave").click(function (e) {
+        var data = {
+            Id: $("#Id").val(),
+            FirstName: $("#FirstName").val(),
+            LastName: $("#LastName").val(),
+            Address: $("#Address").val(),
+            City: $("#City").val(),
+            State: $("#State").val(),
+            DateOfBirth: $("#DateOfBirth").val(),
+            Gender: $("#Gender").val()
+        }
+        if (!isUpdateable) {
+            $.ajax({
+                url: '/Students/Create/',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (data) {
+                    getStudents();
+                    $("#studentModal").modal('hide');
+                    clear();
+                },
+                error: function (err) {
+                    alert("Error: " + err.responseText);
+                }
+            })
+        }
+        else {
+            $.ajax({
+                url: '/Students/Update/',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (data) {
+                    getStudents();
+                    isUpdateable = false;
+                    $("#studentModal").modal('hide');
+                    clear();
+                },
+                error: function (err) {
+                    alert("Error: " + err.responseText);
+                }
+            })
+        }
+    });    
 
-    }
-    else {
-        $.ajax({
-            url: '/Students/Update/',
-            type: 'POST',
-            dataType: 'json',
-            data: data,
-            success: function (data) {
-                getStudents();
-                isUpdateable = false;
-                $("#studentModal").modal('hide');
-                clear();
-            },
-            error: function (err) {
-                alert("Error: " + err.responseText);
-            }
+    $("#btnOK").on("click", function (e) {
 
-        })
-      
-    }
+        e.preventDefault();
 
-});
-//Delete student by id
-function deleteStudentById(id) {
-    $("#confirmModal #title").text("Delete Student");
-    $("#confirmModal").modal('show');
-    $("#confirmModal #btnOk").click(function (e) {
+        var id = $("#confirmModal").data("student-id");
+
         $.ajax({
             url: '/Students/Delete/' + id,
             type: 'POST',
@@ -129,31 +130,30 @@ function deleteStudentById(id) {
             error: function (err) {
                 alert("Error: " + err.responseText);
             }
-
         });
-        e.preventDefault();
+    });
+
+    //Set title for create new
+    $("#btnCreate").click(function () {
+        $("#title").text("Create New");
+        $(function () {
+            $("#DateOfBirth").datepicker({ dateFormat: 'dd.MM.yyyy' });
+        });
+    })
+
+    //Close modal
+    $("#btnClose").click(function () {
+        $("#studentModal").modal('hide');
+        clear();
+    });
+
+    $("#btnEdit").click(function () {
+        $(function () {
+            $("#DateOfBirth").datepicker({ dateFormat: 'dd.MM.yyyy' });
+        });
     });
 }
-//Set title for create new
-$("#btnCreate").click(function () {
-    $("#title").text("Create New");
-    $(function () {
-        $("#DateOfBirth").datepicker({ dateFormat: 'dd.MM.yyyy' });
-    });
-})
 
-//Close modal
-$("#btnClose").click(function () {
-    $("#studentModal").modal('hide');
-    clear();
-
-    
-});
-$("#btnEdit").click(function() {
-    $(function () {
-        $("#DateOfBirth").datepicker({ dateFormat: 'dd.MM.yyyy' });
-    });
-})
 //Clear all items
 function clear() {
     $("#Id").val("");
@@ -165,9 +165,14 @@ function clear() {
     $("#DateOfBirth").val("");
     $("#Gender").val("");
 }
-$(function () {
-    $("#DateOfBirth").datepicker();
-});
+
+//Delete student by id
+function deleteStudentById(id) {
+    $("#confirmModal #title").text("Delete Student");
+    $("#confirmModal").data("student-id", id);
+    $("#confirmModal").modal('show');
+}
+
 
 
 
